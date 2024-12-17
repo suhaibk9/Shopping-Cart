@@ -1,10 +1,11 @@
+const { CategoryController } = require('../../controllers');
 const {
   createCategory,
   getCategories,
   deleteCategory,
   getProductsForCategory,
   getCategory,
-} = require('../../controllers/category_controller');
+} = CategoryController;
 const {
   createCategoryValidator,
 } = require('../../middlewares/category_middleware');

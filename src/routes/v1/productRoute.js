@@ -1,10 +1,7 @@
 const router = require('express').Router();
-const {
-  createProduct,
-  getAllProducts,
-  deleteProduct,
-  getProduct
-} = require('../../controllers/productController');
+const { ProductController } = require('../../controllers');
+const { createProduct, getAllProducts, deleteProduct, getProduct } =
+  ProductController;
 const {
   createProductValidator,
 } = require('../../middlewares/product_middlewares');
