@@ -1,4 +1,5 @@
-const Category = require('../models/category');
+const NotFoundError = require('../exceptions/not_found_error');
+const { Category } = require('../models');
 class CategoryRepository {
   async createCategory(category) {
     try {
@@ -32,6 +33,7 @@ class CategoryRepository {
       throw e;
     }
   }
+ 
 }
 
 module.exports = CategoryRepository;

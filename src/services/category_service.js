@@ -2,8 +2,28 @@ const InternalServerError = require('../exceptions/internal_server_error');
 const NotFoundError = require('../exceptions/not_found_error');
 // const errorMessage = `The resource: ${resourceName} with ${property} : ${propertyValue} not found!`
 class CategoryService {
-  constructor(categoryRepository) {
+  constructor(categoryRepository, productRepository) {
     this.categoryRepository = categoryRepository;
+    this.productRepository = productRepository;
+  }
+  async getProductsForCategory(id) {
+    try {
+      const resp = await this.categoryRepository.getCategory(id);
+      if (!resp) {
+        throw new NotFoundError('Category', 'id', id);
+      }
+      const products = await this.productRepository.getProductsForCategory(id);
+      if (products.length < 1) {
+        throw new NotFoundError('Product', 'category_id', id);
+      }
+      return products;
+    } catch (e) {
+      console.log(e);
+      if (e instanceof NotFoundError) {
+        throw e;
+      }
+      throw new InternalServerError();
+    }
   }
   async createCategory(category) {
     try {

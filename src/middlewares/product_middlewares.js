@@ -47,9 +47,9 @@ const errorResponse = require('../utils/error_response');
 const BadRequest = require('../exceptions/bad_request_error');
 
 const createProductValidator = (req, res, next) => {
-  const { title, description, category, price, image } = req.body;
-
-  if (!title || !description || !category || !price || !image) {
+  const { title, description, categoryId, price, image } = req.body;
+  console.log('REQUEST BODY', req.body);
+  if (!title || !description || !categoryId || !price || !image) {
     const errorMessage =
       'The request body must include title, description, category, price, and image';
     const error = new BadRequest(errorMessage);
