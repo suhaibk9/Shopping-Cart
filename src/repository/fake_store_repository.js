@@ -3,10 +3,11 @@ class FakeStoreRepository {
   async getProducts() {
     try {
       const response = await axios.get('https://fakestoreapi.com/products');
-    //   console.log('All products', response.data);
+
       return response.data;
     } catch (err) {
       console.log(err);
+      
     }
   }
   async getProduct(id) {
