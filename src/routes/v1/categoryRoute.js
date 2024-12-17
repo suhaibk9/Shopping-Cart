@@ -2,6 +2,7 @@ const {
   createCategory,
   getCategories,
   deleteCategory,
+  getProductsForCategory,
   getCategory,
 } = require('../../controllers/category_controller');
 const {
@@ -12,4 +13,5 @@ router.post('/', createCategoryValidator, createCategory);
 router.get('/', getCategories);
 router.get('/:id', getCategory);
 router.delete('/:id', deleteCategory);
+router.get('/:id/products', getProductsForCategory);
 module.exports = router;
