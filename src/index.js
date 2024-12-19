@@ -14,13 +14,18 @@ app.use(responseTime());
 app.use('/api', require('./routes/index'));
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
+  await db.sync();
+  /*
   if (DB_FORCE) {
+    //It means that the database will be recreated every time the server is started.
     await db.sync({ force: true });
   } else if (DB_ALTER) {
+    //It means that the database will be updated every time the server is started.
     await db.sync({ alter: true });
   } else {
+    //It means that the database will be connected every time the server is started
     await db.sync();
-  }
+  }*/
   // await db.sync({ force: false });
   // const res = await Product.create({
   //   title: 'iPhone 14',
