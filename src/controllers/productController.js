@@ -22,7 +22,17 @@ const createProduct = async (req, res) => {
 };
 const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await productService.getEveryProduct();
+    console.log('Query', req.query);
+    const allProducts = await productService.getEveryProduct(req.query);
+
+    if (allProducts.length < 1) {
+      return res.status(200).json({
+        success: true,
+        error: {},
+        message: 'No products found',
+        data: allProducts,
+      });
+    }
     return res.status(200).json({
       success: true,
       error: {},
@@ -43,6 +53,7 @@ const getProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productService.getParticularProduct(id);
+
     return res.status(200).json({
       success: true,
       error: {},
@@ -52,11 +63,11 @@ const getProduct = async (req, res) => {
   } catch (err) {
     console.log(err);
     if (err.name === 'NotFoundError')
-      return res.status(404).json(errorResponse(ReasonPhrases.NOT_FOUND, e));
+      return res.status(404).json(errorResponse(ReasonPhrases.NOT_FOUND, err));
     else
       return res
         .status(500)
-        .json(errorResponse(ReasonPhrases.INTERNAL_SERVER_ERROR, e));
+        .json(errorResponse(ReasonPhrases.INTERNAL_SERVER_ERROR, err));
   }
 };
 const deleteProduct = async (req, res) => {

@@ -1,5 +1,6 @@
 const { Product } = require('../models');
 const NotFoundError = require('../exceptions/not_found_error');
+const { Op } = require('sequelize');
 class ProductRepository {
   // Create a new product
   async createProduct(product) {
@@ -12,9 +13,26 @@ class ProductRepository {
   }
 
   // Get all products
-  async getProducts() {
+  //filter -> {limit, offset, minPrice, maxPrice}
+  async getProducts(filter) {
     try {
-      return await Product.findAll();
+      if (JSON.stringify(filter) !== '{}') {
+        const { limit, offset, min_price, max_price } = filter;
+        const where = {};
+        if (min_price !== undefined) {
+          where.price = { ...where.price, [Op.gte]: Number(min_price) };
+        }
+        if (max_price !== undefined) {
+          where.price = { ...where.price, [Op.lte]: Number(max_price) };
+        }
+        const queryOptions = { where };
+        if (limit !== undefined) queryOptions.limit = Number(limit);
+        if (offset !== undefined) queryOptions.offset = Number(offset);
+        console.log('Query Options', queryOptions);
+        return await Product.findAll(queryOptions);
+      } else {
+        return await Product.findAll();
+      }
     } catch (e) {
       console.log(e);
       throw e;
