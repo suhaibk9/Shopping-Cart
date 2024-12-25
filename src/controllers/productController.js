@@ -92,10 +92,36 @@ const deleteProduct = async (req, res) => {
         .json(errorResponse(ReasonPhrases.INTERNAL_SERVER_ERROR, error));
   }
 };
+const searchProducts = async (req, res) => {
+  try {
+    const searchQuery = req.query.searchQuery;
+    const products = await productService.searchProducts(searchQuery);
+    if (products.length < 1) {
+      return res.status(200).json({
+        success: true,
+        error: {},
+        message: 'No products found',
+        data: products,
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      error: {},
+      message: 'Products retrieved successfully',
+      data: products,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json(errorResponse(ReasonPhrases.INTERNAL_SERVER_ERROR, error));
+  }
+};
 
 module.exports = {
   createProduct,
   getAllProducts,
+  searchProducts,
   deleteProduct,
   getProduct,
 };

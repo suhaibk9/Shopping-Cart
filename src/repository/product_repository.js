@@ -69,6 +69,16 @@ class ProductRepository {
       throw e;
     }
   }
+  async searchProducts(searchQuery) {
+    try {
+      return await Product.findAll({
+        where: { title: { [Op.like]: `%${searchQuery}%` } },
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
 }
 
 module.exports = ProductRepository;

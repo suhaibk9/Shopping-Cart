@@ -111,6 +111,14 @@ class ProductService {
       throw e;
     }
   }
+  async searchProducts(searchQuery = '') {
+    try {
+      return await this.model.searchProducts(searchQuery);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
 }
 
 module.exports = ProductService;
