@@ -3,7 +3,7 @@ const Product = require('./products');
 const User = require('./user');
 const Cart = require('./cart');
 const CartProducts = require('./cart_products');
-const Order_Products = require('./order_products');
+const OrderProducts = require('./order_products');
 const Order = require('./order');
 
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
@@ -30,15 +30,25 @@ User.hasMany(Order, { foreignKey: 'userId' });
 // Many to many mapping between order and products
 // Order has many products through order_products
 // Product belongs to many orders through order_products
-Order.belongsToMany(Product, { through: Order_Products });
-Product.belongsToMany(Order, { through: Order_Products });
+Order.belongsToMany(Product, { through: OrderProducts });
+Product.belongsToMany(Order, { through: OrderProducts });
 
+async function syncDbInOrder() {
+  await Category.sync();
+  await Product.sync();
+  await User.sync();
+  await Cart.sync();
+  await Order.sync();
+  await CartProducts.sync();
+  await OrderProducts.sync();
+}
 module.exports = {
   Category,
   Product,
   User,
   Cart,
   CartProducts,
-  Order_Products,
+  OrderProducts,
   Order,
+  syncDbInOrder,
 };

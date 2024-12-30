@@ -3,5 +3,6 @@ module.exports = {
   ProductController: require('./productController'),
   PingController: require('./pingController'),
   UserController: require('./userController'),
-  CartController:require('./cartController')
+  CartController: require('./cartController'),
+  OrderController: require('./orderController'),
 };

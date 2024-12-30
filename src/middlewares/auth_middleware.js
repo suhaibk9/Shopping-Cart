@@ -24,9 +24,7 @@ const isLoggedIn = async (req, res, next) => {
     // return res
     //   .status(401)
     //   .json(error_response('Unauthorized', new UnauthorizedError()));
-    return res
-      .status(error.statusCode)
-      .json(errorResponse(error.reason, error));
+    return res.status(e.statusCode).json(errorResponse(e.reason, e));
   }
 };
 module.exports = {

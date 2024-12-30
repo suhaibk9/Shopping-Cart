@@ -7,4 +7,5 @@ module.exports = {
   ProductService,
   UserService,
   CartService: require('./cart_service'),
+  OrderService: require('./order_service'),
 };
